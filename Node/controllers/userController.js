@@ -81,7 +81,74 @@ const login = async (req, res) => {
   }
 };
 
+const getUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.send(users);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const currentUserId = req.user.id;
+
+    if (id === currentUserId) {
+      return res.status(403).send({ error: "You cannot delete yourself" });
+    }
+
+    const deletedUser = await User.findByIdAndDelete(id);
+
+    if (!deletedUser) {
+      return res.status(404).send({ error: "User not found" });
+    }
+
+    res.send({ message: "User was deleted", data: deletedUser });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+const getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).send({ error: "User Not found" });
+    }
+
+    res.send(user);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const updatedUser = await User.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+
+    if (!updatedUser) {
+      return res.status(404).send({ error: "User Not found" });
+    }
+
+    res.send(updatedUser);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
 module.exports = {
   register,
   login,
+  getUsers,
+  deleteUser,
+  getUserById,
+  updateUser,
 };
