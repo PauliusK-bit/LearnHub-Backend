@@ -30,20 +30,6 @@ const userSchema = new mongoose.Schema(
       enum: Object.values(ROLES),
       default: ROLES.USER,
     },
-    isActive: {
-      type: Boolean,
-      default: true,
-    },
-    profilePicture: {
-      type: String,
-      default: "defaultProfilePic.png",
-    },
-
-    phoneNumber: {
-      type: String,
-      required: false,
-      unique: true,
-    },
   },
   { timestamps: true }
 );

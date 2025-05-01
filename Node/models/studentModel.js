@@ -33,7 +33,6 @@ const studentSchema = new mongoose.Schema(
 
     phoneNumber: {
       type: String,
-      required: false,
       unique: true,
     },
   },
