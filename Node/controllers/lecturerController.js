@@ -12,20 +12,16 @@ const getLecturers = async (req, res) => {
 const deleteLecturer = async (req, res) => {
   try {
     const { id } = req.params;
-    const currentLecturerId = req.lecturer.id;
-
-    if (id === currentLecturerId) {
-      return res.status(403).send({ error: "You cannot delete yourself" });
-    }
 
     const deletedLecturer = await Lecturer.findByIdAndDelete(id);
 
     if (!deletedLecturer) {
-      return res.status(404).send({ error: "Lecturer not found" });
+      return res.status(404).send({ error: "Lecturer Not found" });
     }
 
-    res.send({ message: "Lecturer was deleted", data: deletedLecturer });
+    res.send({ message: "Lecturer was removed", data: deletedLecturer });
   } catch (error) {
+    console.log(error);
     res.status(500).send(error);
   }
 };

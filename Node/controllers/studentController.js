@@ -12,20 +12,16 @@ const getStudents = async (req, res) => {
 const deleteStudent = async (req, res) => {
   try {
     const { id } = req.params;
-    const currentStudentId = req.student.id;
-
-    if (id === currentStudentId) {
-      return res.status(403).send({ error: "You cannot delete yourself" });
-    }
 
     const deletedStudent = await Student.findByIdAndDelete(id);
 
     if (!deletedStudent) {
-      return res.status(404).send({ error: "Student not found" });
+      return res.status(404).send({ error: "Student Not found" });
     }
 
-    res.send({ message: "Student was deleted", data: deletedStudent });
+    res.send({ message: "Student was removed", data: deletedStudent });
   } catch (error) {
+    console.log(error);
     res.status(500).send(error);
   }
 };
