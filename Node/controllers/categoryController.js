@@ -12,7 +12,13 @@ const createCategory = async (req, res) => {
 
 const getCategories = async (req, res) => {
   try {
-    const categories = await Category.find();
+    const subjectId = req.query._subjectId;
+
+    const filter = {};
+    if (subjectId) {
+      filter.subjectId = subjectId;
+    }
+    const categories = await Category.find(filter);
     res.send(categories);
   } catch (error) {
     res.status(500).send(error);
@@ -68,10 +74,28 @@ const deleteCategory = async (req, res) => {
   }
 };
 
+const getSubjectsByCategory = async (req, res) => {
+  try {
+    const { categoryId } = req.params;
+
+    const category = await Category.findById(categoryId).populate("subjects");
+
+    if (!category) {
+      return res.status(404).send({ error: "Category not found " });
+    }
+
+    res.send(category.subjects);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+};
+
 module.exports = {
   getCategories,
   getCategoryById,
   createCategory,
   updateCategory,
   deleteCategory,
+  getSubjectsByCategory,
 };

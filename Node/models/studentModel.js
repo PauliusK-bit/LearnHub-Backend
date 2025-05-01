@@ -35,6 +35,10 @@ const studentSchema = new mongoose.Schema(
       type: String,
       unique: true,
     },
+    lecturers: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Lecturer",
+    },
   },
   { timestamps: true }
 );

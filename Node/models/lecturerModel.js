@@ -35,6 +35,10 @@ const lecturerSchema = new mongoose.Schema(
       enum: Object.values(ROLES),
       default: ROLES.LECTURER,
     },
+    students: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Student",
+    },
   },
   { timestamps: true }
 );

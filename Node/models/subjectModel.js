@@ -12,6 +12,7 @@ const subjectSchema = new mongoose.Schema({
     type: String,
     maxLength: 200,
   },
+  categoryId: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
 
   createdAt: {
     type: Date,
