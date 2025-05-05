@@ -30,11 +30,6 @@ const studentSchema = new mongoose.Schema(
       enum: Object.values(ROLES),
       default: ROLES.STUDENT,
     },
-
-    phoneNumber: {
-      type: String,
-      unique: true,
-    },
     lecturers: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: "Lecturer",
