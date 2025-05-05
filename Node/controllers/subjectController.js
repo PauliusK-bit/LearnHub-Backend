@@ -1,4 +1,5 @@
 const Subject = require("../models/subjectModel");
+const Video = require("../models/videoModel");
 
 const createSubject = async (req, res) => {
   try {
@@ -68,10 +69,30 @@ const deleteSubject = async (req, res) => {
   }
 };
 
+const getSubjectVideos = async (req, res) => {
+  try {
+    const { subjectId } = req.params;
+
+    const videos = await Video.find({ subjectId: subjectId });
+
+    if (!videos || videos.length === 0) {
+      return res
+        .status(404)
+        .json({ error: "Videos not found for this subject" });
+    }
+
+    res.json(videos);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
 module.exports = {
   createSubject,
   getSubjects,
   getSubjectById,
   updateSubject,
   deleteSubject,
+  getSubjectVideos,
 };

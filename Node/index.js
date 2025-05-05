@@ -19,6 +19,7 @@ const lecturerAPIRoutes = require("./api/lecturerRoutes");
 const studentAPIRoutes = require("./api/studentRoutes");
 const subjectAPIRoutes = require("./api/subjectRoutes");
 const activitiesAPIRoutes = require("./api/activityRoutes");
+const videoAPIRoutes = require("./api/videoRoutes");
 
 app.use("/api/users", userAPIRoutes);
 app.use("/api/categories", categoriesAPIRoutes);
@@ -26,6 +27,7 @@ app.use("/api/lecturers", lecturerAPIRoutes);
 app.use("/api/students", studentAPIRoutes);
 app.use("/api/subjects", subjectAPIRoutes);
 app.use("/api/activities", activitiesAPIRoutes);
+app.use("/api/videos", videoAPIRoutes);
 
 app.set("view engine", "ejs");
 app.set("views", path.join("views"));
