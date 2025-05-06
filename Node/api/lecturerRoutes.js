@@ -6,6 +6,7 @@ const {
   updateLecturer,
   deleteLecturer,
   getStudentsByLecturer,
+  getLecturerGroups,
 } = require("../controllers/lecturerController");
 
 const router = express.Router();
@@ -16,5 +17,6 @@ router.post("/", createLecturer);
 router.put("/:id", updateLecturer);
 router.delete("/:id", deleteLecturer);
 router.get("/:lecturerId/students", getStudentsByLecturer);
+router.get("/:lecturerId/groups", getLecturerGroups);
 
 module.exports = router;

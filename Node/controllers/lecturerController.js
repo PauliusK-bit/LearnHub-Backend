@@ -1,4 +1,5 @@
 const Lecturer = require("../models/lecturerModel");
+const Group = require("../models/groupModel");
 
 const getLecturers = async (req, res) => {
   try {
@@ -86,6 +87,18 @@ const getStudentsByLecturer = async (req, res) => {
   }
 };
 
+const getLecturerGroups = async (req, res) => {
+  try {
+    const { lecturerId } = req.params;
+    const groups = await Group.find({ lecturerId });
+
+    res.send(groups);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: "Server error" });
+  }
+};
+
 module.exports = {
   getLecturers,
   deleteLecturer,
@@ -93,4 +106,5 @@ module.exports = {
   getLecturerById,
   updateLecturer,
   getStudentsByLecturer,
+  getLecturerGroups,
 };

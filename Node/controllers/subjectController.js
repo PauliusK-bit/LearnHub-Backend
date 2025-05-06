@@ -84,7 +84,7 @@ const getSubjectVideos = async (req, res) => {
     res.json(videos);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).send({ error: "Server error" });
   }
 };
 
