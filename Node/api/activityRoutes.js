@@ -6,13 +6,31 @@ const {
   updateActivity,
   deleteActivity,
 } = require("../controllers/activityController");
+const authMiddleware = require("../middlewares/authMiddleware");
+const rolesMiddleware = require("../middlewares/rolesMiddleware");
+const ROLES = require("../config/roles");
 
 const router = express.Router();
 
-router.get("/", getActivities);
-router.get("/:id", getActivityById);
-router.post("/", createActivity);
-router.put("/:id", updateActivity);
-router.delete("/:id", deleteActivity);
+router.get("/", authMiddleware, rolesMiddleware(ROLES.ADMIN), getActivities);
+router.get(
+  "/:id",
+  authMiddleware,
+  rolesMiddleware(ROLES.ADMIN),
+  getActivityById
+);
+router.post("/", authMiddleware, rolesMiddleware(ROLES.ADMIN), createActivity);
+router.put(
+  "/:id",
+  authMiddleware,
+  rolesMiddleware(ROLES.ADMIN),
+  updateActivity
+);
+router.delete(
+  "/:id",
+  authMiddleware,
+  rolesMiddleware(ROLES.ADMIN),
+  deleteActivity
+);
 
 module.exports = router;
