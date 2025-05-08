@@ -13,26 +13,11 @@ const ROLES = require("../config/roles");
 
 const router = express.Router();
 
-router.get("/", authMiddleware, rolesMiddleware(ROLES.ADMIN), getCategories);
-router.get(
-  "/:id",
-  authMiddleware,
-  rolesMiddleware(ROLES.ADMIN),
-  getCategoryById
-);
-router.post("/", authMiddleware, rolesMiddleware(ROLES.ADMIN), createCategory);
-router.put(
-  "/:id",
-  authMiddleware,
-  rolesMiddleware(ROLES.ADMIN),
-  updateCategory
-);
-router.delete(
-  "/:id",
-  authMiddleware,
-  rolesMiddleware(ROLES.ADMIN),
-  deleteCategory
-);
+router.get("/", getCategories);
+router.get("/:id", getCategoryById);
+router.post("/", createCategory);
+router.put("/:id", updateCategory);
+router.delete("/:id", deleteCategory);
 router.get("/:categoryId/subjects", getSubjectsByCategory);
 
 module.exports = router;
