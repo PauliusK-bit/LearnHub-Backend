@@ -8,14 +8,45 @@ const {
   getSubjectVideos,
 } = require("../controllers/subjectController");
 const authMiddleware = require("../middlewares/authMiddleware");
+const rolesMiddleware = require("../middlewares/rolesMiddleware");
+const ROLES = require("../config/roles");
 
 const router = express.Router();
 
-router.get("/", getSubjects);
-router.get("/:id", getSubjectById);
-router.post("/", createSubject);
-router.put("/:id", updateSubject);
-router.delete("/:id", deleteSubject);
-router.get("/:subjectId/videos", getSubjectVideos);
+router.get(
+  "/",
+  authMiddleware,
+  rolesMiddleware(ROLES.STUDENT, ROLES.ADMIN, ROLES.LECTURER),
+  getSubjects
+);
+router.get(
+  "/:id",
+  authMiddleware,
+  rolesMiddleware(ROLES.STUDENT, ROLES.ADMIN, ROLES.LECTURER),
+  getSubjectById
+);
+router.post(
+  "/",
+  authMiddleware,
+  rolesMiddleware(ROLES.ADMIN, ROLES.LECTURER),
+  createSubject
+);
+router.put(
+  "/:id",
+  authMiddleware,
+  rolesMiddleware(ROLES.ADMIN, ROLES.LECTURER),
+  updateSubject
+);
+router.delete(
+  "/:id",
+  authMiddleware,
+  rolesMiddleware(ROLES.ADMIN, ROLES.LECTURER),
+  deleteSubject
+);
+router.get(
+  "/:subjectId/videos",
+  rolesMiddleware(ROLES.STUDENT, ROLES.ADMIN, ROLES.LECTURER),
+  getSubjectVideos
+);
 
 module.exports = router;

@@ -13,11 +13,41 @@ const ROLES = require("../config/roles");
 
 const router = express.Router();
 
-router.get("/", getGroups);
-router.get("/:id", getGroupById);
-router.post("/", createGroup);
-router.put("/:id", updateGroup);
-router.delete("/:id", deleteGroup);
-router.get("/:groupId/students", getGroupStudents);
+router.get(
+  "/",
+  authMiddleware,
+  rolesMiddleware(ROLES.ADMIN, ROLES.LECTURER),
+  getGroups
+);
+router.get(
+  "/:id",
+  authMiddleware,
+  rolesMiddleware(ROLES.ADMIN, ROLES.LECTURER),
+  getGroupById
+);
+router.post(
+  "/",
+  authMiddleware,
+  rolesMiddleware(ROLES.ADMIN, ROLES.LECTURER),
+  createGroup
+);
+router.put(
+  "/:id",
+  authMiddleware,
+  rolesMiddleware(ROLES.ADMIN, ROLES.LECTURER),
+  updateGroup
+);
+router.delete(
+  "/:id",
+  authMiddleware,
+  rolesMiddleware(ROLES.ADMIN, ROLES.LECTURER),
+  deleteGroup
+);
+router.get(
+  "/:groupId/students",
+  authMiddleware,
+  rolesMiddleware(ROLES.ADMIN, ROLES.LECTURER),
+  getGroupStudents
+);
 
 module.exports = router;

@@ -14,12 +14,37 @@ const authMiddleware = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
-router.get("/", getLecturers);
-router.get("/:id", getLecturerById);
-router.post("/", createLecturer);
-router.put("/:id", updateLecturer);
-router.delete("/:id", deleteLecturer);
-router.get("/:lecturerId/students", getStudentsByLecturer);
-router.get("/:lecturerId/groups", getLecturerGroups);
+router.get("/", authMiddleware, rolesMiddleware(ROLES.ADMIN), getLecturers);
+router.get(
+  "/:id",
+  authMiddleware,
+  rolesMiddleware(ROLES.ADMIN),
+  getLecturerById
+);
+router.post("/", authMiddleware, rolesMiddleware(ROLES.ADMIN), createLecturer);
+router.put(
+  "/:id",
+  authMiddleware,
+  rolesMiddleware(ROLES.ADMIN),
+  updateLecturer
+);
+router.delete(
+  "/:id",
+  authMiddleware,
+  rolesMiddleware(ROLES.ADMIN),
+  deleteLecturer
+);
+router.get(
+  "/:lecturerId/students",
+  authMiddleware,
+  rolesMiddleware(ROLES.ADMIN),
+  getStudentsByLecturer
+);
+router.get(
+  "/:lecturerId/groups",
+  authMiddleware,
+  rolesMiddleware(ROLES.ADMIN),
+  getLecturerGroups
+);
 
 module.exports = router;

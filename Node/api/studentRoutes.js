@@ -12,10 +12,30 @@ const ROLES = require("../config/roles");
 
 const router = express.Router();
 
-router.get("/", getStudents);
-router.get("/:id", getStudentById);
-router.post("/", createStudent);
-router.put("/:id", updateStudent);
-router.delete("/:id", deleteStudent);
+router.get("/", authMiddleware, rolesMiddleware(ROLES.ADMIN), getStudents);
+router.get(
+  "/:id",
+  authMiddleware,
+  rolesMiddleware(ROLES.ADMIN, ROLES.LECTURER),
+  getStudentById
+);
+router.post(
+  "/",
+  authMiddleware,
+  rolesMiddleware(ROLES.ADMIN, ROLES.LECTURER),
+  createStudent
+);
+router.put(
+  "/:id",
+  authMiddleware,
+  rolesMiddleware(ROLES.ADMIN, ROLES.LECTURER),
+  updateStudent
+);
+router.delete(
+  "/:id",
+  authMiddleware,
+  rolesMiddleware(ROLES.ADMIN),
+  deleteStudent
+);
 
 module.exports = router;
