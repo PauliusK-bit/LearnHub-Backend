@@ -14,8 +14,7 @@ const router = express.Router();
 
 router.get(
   "/",
-  authMiddleware,
-  rolesMiddleware(ROLES.ADMIN, ROLES.LECTURER, ROLES.STUDENT, ROLES.USER),
+
   getActivities
 );
 router.get(
