@@ -12,17 +12,8 @@ const ROLES = require("../config/roles");
 
 const router = express.Router();
 
-router.get(
-  "/",
-
-  getActivities
-);
-router.get(
-  "/:id",
-  authMiddleware,
-  rolesMiddleware(ROLES.ADMIN, ROLES.LECTURER, ROLES.STUDENT, ROLES.USER),
-  getActivityById
-);
+router.get("/", getActivities);
+router.get("/:id", getActivityById);
 router.post("/", authMiddleware, rolesMiddleware(ROLES.ADMIN), createActivity);
 router.put(
   "/:id",
